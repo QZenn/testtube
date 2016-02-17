@@ -22,6 +22,7 @@ public class YoutubeTest {
         driver = new FirefoxDriver();
         baseUrl = "https://ya.ru";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
     }
 
     @After
@@ -51,6 +52,11 @@ public class YoutubeTest {
     public void testYoutubeLogin() throws Exception {
         driver.manage().deleteAllCookies();
         driver.get("https://youtube.com/");
+        WebElement langButton = driver.findElement(By.id("yt-picker-language-button"));
+        langButton.click();
+        String engXpath = "//button[@value='en']";
+        WebElement Eng = driver.findElement(By.xpath(engXpath));
+        Eng.click();
         WebElement loginButton = driver.findElement(By.cssSelector("button.yt-uix-button-primary"));
         loginButton.click();
         WebElement login = driver.findElement(By.id("Email"));
