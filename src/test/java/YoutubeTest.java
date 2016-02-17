@@ -5,6 +5,7 @@
 import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.apache.commons.codec.binary.Base64;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,5 +45,28 @@ public class YoutubeTest {
         String title = driver.getTitle();
         System.out.println(title);
         assertTrue(title.contains("test"));
+    }
+
+    @Test
+    public void testYoutubeLogin() throws Exception {
+        driver.manage().deleteAllCookies();
+        driver.get("https://youtube.com/");
+        WebElement loginButton = driver.findElement(By.cssSelector("button.yt-uix-button-primary"));
+        loginButton.click();
+        WebElement login = driver.findElement(By.id("Email"));
+        login.clear();
+        login.sendKeys("randomtester23997");
+        WebElement next = driver.findElement(By.id("next"));
+        next.click();
+        WebElement password = driver.findElement(By.id("Passwd"));
+        password.clear();
+        String pswB64 = "cmFuZG9tcGFzc3dvcmQyMzk5Nw==";
+        String psw = new String(Base64.decodeBase64(pswB64));
+        password.sendKeys(psw);
+        System.out.println();
+        WebElement signIn = driver.findElement(By.id("signIn"));
+        signIn.click();
+        WebElement avatar = driver.findElement(By.className("yt-masthead-user-icon"));
+        assertTrue(avatar.isDisplayed());
     }
 }
