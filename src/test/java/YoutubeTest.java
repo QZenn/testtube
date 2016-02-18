@@ -69,10 +69,16 @@ public class YoutubeTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("upload-thumb-img")));
         String videoNameStr = UUID.randomUUID().toString();
         WebElement videoName = driver.findElement(By.className("video-settings-title"));
+        videoName.clear();
         videoName.sendKeys(videoNameStr);
         WebElement publish = driver.findElement(By.className("save-changes-button"));
         publish.click();
         WebElement return_to_editing_button = (new WebDriverWait(driver, 600))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("return-to-editing-button")));
+        WebElement searchField = driver.findElement(By.className("search-term"));
+        searchField.clear();
+        searchField.sendKeys(videoNameStr);
+        WebElement searchBtn = driver.findElement(By.className("search-button"));
+        searchBtn.click();
     }
 }
