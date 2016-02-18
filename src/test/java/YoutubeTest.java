@@ -81,6 +81,8 @@ public class YoutubeTest {
         WebElement searchBtn = driver.findElement(By.className("search-button"));
         searchBtn.click();
         driver.get("http://www.youtube.com/my_videos");
+        (new WebDriverWait(driver, 600))
+                .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("#vm-video-list-container > div:nth-child(2) > p:nth-child(1) > span:nth-child(1)")));
         driver.findElement(By.cssSelector("#non-appbar-vm-video-actions-bar > div > span.yt-uix-form-input-checkbox-container.vm-select-all > input")).click();
         driver.findElement(By.cssSelector("#non-appbar-vm-video-actions-bar > div > div.yt-uix-menu.vm-video-action-button-selected")).click();
         driver.findElement(By.cssSelector(".non-appbar-action-menu-content > li:nth-child(8)")).click();
