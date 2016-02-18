@@ -10,17 +10,15 @@ import org.apache.commons.codec.binary.Base64;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class YoutubeTest {
     private WebDriver driver;
     private String baseUrl;
-    private StringBuffer verificationErrors = new StringBuffer();
 
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "https://ya.ru";
+        baseUrl = "https://youtube.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
@@ -32,22 +30,8 @@ public class YoutubeTest {
     }
 
     @Test
-    public void testYaru() throws Exception {
-        driver.get(baseUrl + "/");
-        WebElement searchTestField = driver.findElement(By.name("text"));
-        searchTestField.click();
-        searchTestField.clear();
-        searchTestField.sendKeys("test");
-        WebElement searchBotton = driver.findElement(By.className("button"));
-        searchBotton.click();
-        String title = driver.getTitle();
-        System.out.println(title);
-        assertTrue(title.contains("test"));
-    }
-
-    @Test
     public void testYoutubeLogin() throws Exception {
-        driver.get("https://youtube.com/");
+        driver.get(baseUrl);
         WebElement langButton = driver.findElement(By.id("yt-picker-language-button"));
         langButton.click();
         String engXpath = "//button[@value='en']";
