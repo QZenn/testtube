@@ -7,6 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.apache.commons.codec.binary.Base64;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
@@ -59,6 +60,9 @@ public class YoutubeTest {
         WebElement input = driver.findElement(By.cssSelector("#upload-prompt-box > input[type=\"file\"]"));
         String js = "arguments[0].style.height='auto'; arguments[0].style.visibility='visible';";
         ((JavascriptExecutor) driver).executeScript(js, input);
-        input.sendKeys("absoutePathToFile");
+        File videoFile = new File("src/test/resources/test.mp4");
+        String pathToFile = videoFile.getCanonicalPath();
+        System.out.println(pathToFile);
+        input.sendKeys(pathToFile);
     }
 }
