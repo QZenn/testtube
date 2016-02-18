@@ -5,6 +5,7 @@
 import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.*;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.File;
@@ -62,7 +63,12 @@ public class YoutubeTest {
         ((JavascriptExecutor) driver).executeScript(js, input);
         File videoFile = new File("src/test/resources/test.mp4");
         String pathToFile = videoFile.getCanonicalPath();
-        System.out.println(pathToFile);
         input.sendKeys(pathToFile);
+        WebElement upload_thumb_img = (new WebDriverWait(driver, 600))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.className("upload-thumb-img")));
+        WebElement publish = driver.findElement(By.className("save-changes-button"));
+        publish.click();
+        WebElement return_to_editing_button = (new WebDriverWait(driver, 600))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.className("return-to-editing-button")));
     }
 }
