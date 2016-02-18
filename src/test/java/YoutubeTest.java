@@ -74,5 +74,11 @@ public class YoutubeTest {
         signIn.click();
         WebElement avatar = driver.findElement(By.className("yt-masthead-user-icon"));
         assertTrue(avatar.isDisplayed());
+        WebElement uploadBtn = driver.findElement(By.linkText("Upload"));
+        uploadBtn.click();
+        WebElement input = driver.findElement(By.cssSelector("#upload-prompt-box > input[type=\"file\"]"));
+        String js = "arguments[0].style.height='auto'; arguments[0].style.visibility='visible';";
+        ((JavascriptExecutor) driver).executeScript(js, input);
+        input.sendKeys("absoutePathToFile");
     }
 }
