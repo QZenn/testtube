@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.*;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.File;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
@@ -66,6 +67,9 @@ public class YoutubeTest {
         input.sendKeys(pathToFile);
         WebElement upload_thumb_img = (new WebDriverWait(driver, 600))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("upload-thumb-img")));
+        String videoNameStr = UUID.randomUUID().toString();
+        WebElement videoName = driver.findElement(By.className("video-settings-title"));
+        videoName.sendKeys(videoNameStr);
         WebElement publish = driver.findElement(By.className("save-changes-button"));
         publish.click();
         WebElement return_to_editing_button = (new WebDriverWait(driver, 600))
