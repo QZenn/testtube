@@ -22,16 +22,13 @@ public class YoutubeTest {
         driver = new FirefoxDriver();
         baseUrl = "https://ya.ru";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
     }
 
     @After
     public void tearDown() throws Exception {
         driver.quit();
-        String verificationErrorString = verificationErrors.toString();
-        if (!"".equals(verificationErrorString)) {
-            fail(verificationErrorString);
-        }
     }
 
     @Test
@@ -50,7 +47,6 @@ public class YoutubeTest {
 
     @Test
     public void testYoutubeLogin() throws Exception {
-        driver.manage().deleteAllCookies();
         driver.get("https://youtube.com/");
         WebElement langButton = driver.findElement(By.id("yt-picker-language-button"));
         langButton.click();
