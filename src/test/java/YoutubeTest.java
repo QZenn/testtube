@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class YoutubeTest {
     private WebDriver driver;
     private String baseUrl;
-    final Logger logger = LoggerFactory.getLogger(YoutubeTest.class);
+    final Logger log = LoggerFactory.getLogger(YoutubeTest.class);
     final String log4jConfPath = "src/test/resources/log4j.properties";
 
     @Before
@@ -40,53 +40,78 @@ public class YoutubeTest {
 
     @Test
     public void testYoutubeLogin() throws Exception {
-        logger.info("open page");
+        log.info("Open page");
         driver.get(baseUrl);
+
+        log.info("Open language picker menu");
         WebElement langButton = driver.findElement(By.id("yt-picker-language-button"));
         langButton.click();
+
+        log.info("Select English language");
         String engXpath = "//button[@value='en']";
         WebElement Eng = driver.findElement(By.xpath(engXpath));
         Eng.click();
+
+        log.info("Proceed to sign in");
         WebElement loginButton = driver.findElement(By.cssSelector("button.yt-uix-button-primary"));
         loginButton.click();
+
+        log.info("Enter email");
         WebElement login = driver.findElement(By.id("Email"));
         login.clear();
         login.sendKeys("randomtester23997");
         WebElement next = driver.findElement(By.id("next"));
         next.click();
+
+        log.info("Enter password");
         WebElement password = driver.findElement(By.id("Passwd"));
         password.clear();
         String pswB64 = "cmFuZG9tcGFzc3dvcmQyMzk5Nw==";
         String psw = new String(Base64.decodeBase64(pswB64));
         password.sendKeys(psw);
-        System.out.println();
         WebElement signIn = driver.findElement(By.id("signIn"));
         signIn.click();
+
+        log.info("Check avatar as sign of successful logging in");
         WebElement avatar = driver.findElement(By.className("yt-masthead-user-icon"));
         assertTrue(avatar.isDisplayed());
+
+        log.info("Go to upload file");
         WebElement uploadBtn = driver.findElement(By.linkText("Upload"));
         uploadBtn.click();
+
+        log.info("Choose embedded file");
         WebElement input = driver.findElement(By.cssSelector("#upload-prompt-box > input[type=\"file\"]"));
         String js = "arguments[0].style.height='auto'; arguments[0].style.visibility='visible';";
         ((JavascriptExecutor) driver).executeScript(js, input);
         File videoFile = new File("src/test/resources/test.mp4");
         String pathToFile = videoFile.getCanonicalPath();
         input.sendKeys(pathToFile);
+
+        log.info("Wait till loading and processing finished max 10m");
         WebElement upload_thumb_img = (new WebDriverWait(driver, 600))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("upload-thumb-img")));
+
+        log.info("Set unique UUID name for file");
         String videoNameStr = UUID.randomUUID().toString();
         WebElement videoName = driver.findElement(By.className("video-settings-title"));
         videoName.clear();
         videoName.sendKeys(videoNameStr);
+
+        log.info("Publish video");
         WebElement publish = driver.findElement(By.className("save-changes-button"));
         publish.click();
         WebElement return_to_editing_button = (new WebDriverWait(driver, 600))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("return-to-editing-button")));
+
+        log.info("Search uploaded video");
         WebElement searchField = driver.findElement(By.className("search-term"));
         searchField.clear();
         searchField.sendKeys(videoNameStr);
         WebElement searchBtn = driver.findElement(By.className("search-button"));
         searchBtn.click();
+
+        log.info("Delete uploaded video");
         driver.get("http://www.youtube.com/my_videos");
         (new WebDriverWait(driver, 600))
                 .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("#vm-video-list-container > div:nth-child(2) > p:nth-child(1) > span:nth-child(1)")));
