@@ -92,8 +92,8 @@ public class YoutubeTest {
         WebElement upload_thumb_img = (new WebDriverWait(driver, 600))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("upload-thumb-img")));
 
-        log.info("Set unique UUID name for file");
-        String videoNameStr = UUID.randomUUID().toString();
+        log.info("Set unique name for file");
+        String videoNameStr = "phumevebra";
         WebElement videoName = driver.findElement(By.className("video-settings-title"));
         videoName.clear();
         videoName.sendKeys(videoNameStr);
