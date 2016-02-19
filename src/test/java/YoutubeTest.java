@@ -2,11 +2,14 @@
  * Created by QZen on 17/02/16.
  */
 
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.*;
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.UUID;
@@ -17,9 +20,12 @@ import static org.junit.Assert.assertTrue;
 public class YoutubeTest {
     private WebDriver driver;
     private String baseUrl;
+    final Logger logger = LoggerFactory.getLogger(YoutubeTest.class);
+    final String log4jConfPath = "src/test/resources/log4j.properties";
 
     @Before
     public void setUp() throws Exception {
+        PropertyConfigurator.configure(log4jConfPath);
         driver = new FirefoxDriver();
         baseUrl = "https://youtube.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -34,6 +40,7 @@ public class YoutubeTest {
 
     @Test
     public void testYoutubeLogin() throws Exception {
+        logger.info("open page");
         driver.get(baseUrl);
         WebElement langButton = driver.findElement(By.id("yt-picker-language-button"));
         langButton.click();
