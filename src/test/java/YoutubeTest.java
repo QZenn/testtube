@@ -6,6 +6,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.*;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -26,9 +27,11 @@ public class YoutubeTest {
 
     @Before
     public void setUp() throws Exception {
-        PropertyConfigurator.configure(log4jConfPath);
-        driver = new FirefoxDriver();
         baseUrl = "https://youtube.com/";
+        PropertyConfigurator.configure(log4jConfPath);
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("intl.accept_languages","fr");
+        driver = new FirefoxDriver(profile);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
