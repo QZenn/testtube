@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -93,7 +94,7 @@ public class YoutubeTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("upload-thumb-img")));
 
         log.info("Set unique name for file");
-        String videoNameStr = "phumevebra";
+        String videoNameStr = "quvayumac";
         WebElement videoName = driver.findElement(By.className("video-settings-title"));
         videoName.clear();
         videoName.sendKeys(videoNameStr);
@@ -104,22 +105,48 @@ public class YoutubeTest {
         WebElement return_to_editing_button = (new WebDriverWait(driver, 600))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("return-to-editing-button")));
 
-        log.info("Search uploaded video");
-        WebElement searchField = driver.findElement(By.className("search-term"));
-        searchField.clear();
-        searchField.sendKeys(videoNameStr);
-        WebElement searchBtn = driver.findElement(By.className("search-button"));
-        searchBtn.click();
+        int maxInteration = 10;
+        int sleepMs = 10000;
+        log.info("Wait for uploaded video become available via search for " + maxInteration*sleepMs + "ms");
+        for ( int iteration = 0; iteration < maxInteration + 2; iteration++ )
+        {
+            Thread.sleep(sleepMs);
+            WebElement searchField = driver.findElement(By.className("search-term"));
+            searchField.clear();
+            searchField.sendKeys(videoNameStr);
+            WebElement searchBtn = driver.findElement(By.className("search-button"));
+            searchBtn.click();
+            List<WebElement> result = driver.findElements(By.className("yt-uix-tile-link"));
+            if ( result.size() > 0) {
+                if (result.get(0).getText().equals(videoNameStr)) {
+                    break;
+                }
+            }
+            if (iteration > maxInteration) {
+                assertTrue("Video unavailable via search", false);
+            }
+        }
+
+        log.info("Open video from search");
+        WebElement videoLink = driver.findElement(By.linkText(videoNameStr));
+        videoLink.click();
+
+        log.info("Check video played");
+        WebElement video = (new WebDriverWait(driver, 60))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//video")));
+        assertTrue(video.isDisplayed());
+        assertTrue(driver.findElement(By.id("eow-title")).getText().contains(videoNameStr));
 
         log.info("Delete uploaded video");
         driver.get("http://www.youtube.com/my_videos");
-        (new WebDriverWait(driver, 600))
+        (new WebDriverWait(driver, 60))
                 .until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("#vm-video-list-container > div:nth-child(2) > p:nth-child(1) > span:nth-child(1)")));
         driver.findElement(By.cssSelector("#non-appbar-vm-video-actions-bar > div > span.yt-uix-form-input-checkbox-container.vm-select-all > input")).click();
         driver.findElement(By.cssSelector("#non-appbar-vm-video-actions-bar > div > div.yt-uix-menu.vm-video-action-button-selected")).click();
         driver.findElement(By.cssSelector(".non-appbar-action-menu-content > li:nth-child(8)")).click();
         driver.findElement(By.cssSelector(".vm-video-actions-delete-button-confirm")).click();
-        (new WebDriverWait(driver, 600))
+        WebElement successDelete = (new WebDriverWait(driver, 60))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#vm-general-notifs > div > div.yt-alert-content")));
+        assertTrue("Success delete message is not displayed", successDelete.isDisplayed());
     }
 }
