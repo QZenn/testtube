@@ -14,12 +14,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class PageBase {
     private static WebDriver driver;
-    private String baseUrl;
-    final Logger log = LoggerFactory.getLogger(PageBase.class);
+    final protected String baseUrl = "https://youtube.com/";
+    final protected Logger log = LoggerFactory.getLogger(PageBase.class);
     final String log4jConfPath = "src/test/resources/log4j.properties";
 
     public void setUp() throws Exception {
-        baseUrl = "https://youtube.com/";
         PropertyConfigurator.configure(log4jConfPath);
         getDriver();
     }
