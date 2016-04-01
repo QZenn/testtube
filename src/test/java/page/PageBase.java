@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Created by QZen on 01/04/16.
  */
 public class PageBase {
-    private WebDriver driver;
+    private static WebDriver driver;
     private String baseUrl;
     final Logger log = LoggerFactory.getLogger(PageBase.class);
     final String log4jConfPath = "src/test/resources/log4j.properties";
@@ -21,15 +21,24 @@ public class PageBase {
     public void setUp() throws Exception {
         baseUrl = "https://youtube.com/";
         PropertyConfigurator.configure(log4jConfPath);
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages","fr");
-        driver = new FirefoxDriver(profile);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().deleteAllCookies();
-        driver.manage().window().maximize();
+        getDriver();
     }
 
     public void tearDown() throws Exception {
-        driver.quit();
+        getDriver().quit();
+    }
+
+    public static WebDriver getDriver() {
+        synchronized (PageBase.class){
+            if (driver == null) {
+                FirefoxProfile profile = new FirefoxProfile();
+                profile.setPreference("intl.accept_languages","fr");
+                driver = new FirefoxDriver(profile);
+                driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                driver.manage().deleteAllCookies();
+                driver.manage().window().maximize();
+            }
+        }
+        return driver;
     }
 }
