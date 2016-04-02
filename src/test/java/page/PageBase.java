@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class PageBase {
     private static WebDriver driver;
     final protected String baseUrl = "https://www.youtube.com/";
-    private Logger log = LoggerFactory.getLogger(PageBase.class);
+    private static Logger log = LoggerFactory.getLogger(PageBase.class);
     final String log4jConfPath = "src/test/resources/log4j.properties";
 
     public void setUp() throws Exception {
@@ -45,6 +45,7 @@ public class PageBase {
         synchronized (PageBase.class) {
             log = LoggerFactory.getLogger(tag);
         }
+        log("New log tag was set.");
     }
 
     public void log(String text) {
