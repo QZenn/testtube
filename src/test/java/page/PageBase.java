@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class PageBase {
     private static WebDriver driver;
-    final protected String baseUrl = "https://youtube.com/";
+    final protected String baseUrl = "https://www.youtube.com/";
     final protected Logger log = LoggerFactory.getLogger(PageBase.class);
     final String log4jConfPath = "src/test/resources/log4j.properties";
 

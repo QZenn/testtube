@@ -28,5 +28,6 @@ public class MainPageLoadTest extends PageBase {
     public void mainPageLoadTest() throws Exception {
         log.info("Open page");
         getDriver().get(baseUrl);
+        assertTrue(getDriver().getCurrentUrl().contains(baseUrl));
     }
 }
