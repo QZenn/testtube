@@ -24,7 +24,7 @@ public class PgSearch extends PageBase {
         Boolean isPresent = false;
         List<WebElement> result = getDriver().findElements(By.className("yt-uix-tile-link"));
         if ( result.size() > 0) {
-            if (result.get(0).getText().equals(Property.VIDEO_NAME)) {
+            if (result.get(0).getText().equals(name)) {
                 isPresent = true;
             }
         }
