@@ -42,7 +42,6 @@ public class YoutubeTest {
         driver.quit();
     }
 
-    @Test
     public void testYoutubeLogin() throws Exception {
         log.info("Open page");
         driver.get(baseUrl);
