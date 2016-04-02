@@ -1,6 +1,5 @@
 package page;
 
-import data.Property;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
