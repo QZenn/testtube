@@ -7,9 +7,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class PgMain extends PageBase {
 
-    public void openPage() {
-        log("Open page");
+    public void openMainPage() {
+        log("Open main page");
         getDriver().get(baseUrl);
-        assertTrue(getDriver().getCurrentUrl().contains(baseUrl));
+        assertTrue("Different URL was opened or redirect was performed. " +
+                        "Expected URL: " + baseUrl,
+                getDriver().getCurrentUrl().contains(baseUrl));
+        log("Main page opened");
     }
 }

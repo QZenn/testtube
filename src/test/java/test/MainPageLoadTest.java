@@ -26,6 +26,6 @@ public class MainPageLoadTest extends PageBase {
 
     @Test
     public void mainPageLoadTest() throws Exception {
-        new PgMain().openPage();
+        new PgMain().openMainPage();
     }
 }
