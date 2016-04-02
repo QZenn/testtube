@@ -56,17 +56,13 @@ public class PgUpload extends PageBase {
         for ( int iteration = 0; iteration < maxInteration + 2; iteration++ )
         {
             Thread.sleep(sleepMs);
-            WebElement searchField = getDriver().findElement(By.className("search-term"));
-            searchField.clear();
-            searchField.sendKeys(Property.VIDEO_NAME);
-            WebElement searchBtn = getDriver().findElement(By.className("search-button"));
-            searchBtn.click();
-            List<WebElement> result = getDriver().findElements(By.className("yt-uix-tile-link"));
-            if ( result.size() > 0) {
-                if (result.get(0).getText().equals(Property.VIDEO_NAME)) {
-                    break;
-                }
+            PgSearch pgSearch = new PgSearch();
+            pgSearch.searchForText(Property.VIDEO_NAME);
+
+            if (pgSearch.isVideoPresentInResults(Property.VIDEO_NAME)) {
+                break;
             }
+
             if (iteration > maxInteration) {
                 assertTrue("Video unavailable via search", false);
             }

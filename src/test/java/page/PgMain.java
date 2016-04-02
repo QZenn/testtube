@@ -47,6 +47,7 @@ public class PgMain extends PageBase {
 
     public void openVideoFromSearch() {
         log("Open video from search");
+        new PgSearch().searchForText(Property.VIDEO_NAME);
         WebElement videoLink = getDriver().findElement(By.linkText(Property.VIDEO_NAME));
         videoLink.click();
     }
