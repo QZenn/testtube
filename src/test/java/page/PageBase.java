@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class PageBase {
     private static WebDriver driver;
     final protected String baseUrl = "https://www.youtube.com/";
-    final protected Logger log = LoggerFactory.getLogger(PageBase.class);
+    private Logger log = LoggerFactory.getLogger(PageBase.class);
     final String log4jConfPath = "src/test/resources/log4j.properties";
 
     public void setUp() throws Exception {
@@ -39,5 +39,15 @@ public class PageBase {
             }
         }
         return driver;
+    }
+
+    public void setLogTag(Class tag) {
+        synchronized (PageBase.class) {
+            log = LoggerFactory.getLogger(tag);
+        }
+    }
+
+    public void log(String text) {
+        log.info(text);
     }
 }
