@@ -4,8 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import page.PageBase;
-
-import static org.junit.Assert.assertTrue;
+import page.PgMain;
 
 /**
  * Created by QZen on 02/04/16.
@@ -27,8 +26,6 @@ public class MainPageLoadTest extends PageBase {
 
     @Test
     public void mainPageLoadTest() throws Exception {
-        log("Open page");
-        getDriver().get(baseUrl);
-        assertTrue(getDriver().getCurrentUrl().contains(baseUrl));
+        new PgMain().openPage();
     }
 }
