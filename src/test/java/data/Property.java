@@ -10,6 +10,7 @@ import java.io.InputStream;
 public class Property {
 
     public static final String BASE_URL;
+    public static final String VIDEO_NAME;
 
     private static final String TEST_PROPERTIES_FILE = "/test.properties";
     private static final java.util.Properties TEST_PROPERTIES = new java.util.Properties();
@@ -28,6 +29,7 @@ public class Property {
         }
 
         BASE_URL = get("BaseUrl");
+        VIDEO_NAME = get("VideoName");
     }
 
     private Property() {

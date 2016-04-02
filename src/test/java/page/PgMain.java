@@ -47,8 +47,7 @@ public class PgMain extends PageBase {
 
     public void openVideoFromSearch() {
         log("Open video from search");
-        String videoNameStr = "quvayumac";
-        WebElement videoLink = getDriver().findElement(By.linkText(videoNameStr));
+        WebElement videoLink = getDriver().findElement(By.linkText(Property.VIDEO_NAME));
         videoLink.click();
     }
 }

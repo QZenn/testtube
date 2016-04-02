@@ -1,5 +1,6 @@
 package page;
 
+import data.Property;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,7 +18,6 @@ public class PgPlayer extends PageBase {
         WebElement video = (new WebDriverWait(getDriver(), 60))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//video")));
         assertTrue(video.isDisplayed());
-        String videoNameStr = "quvayumac";
-        assertTrue(getDriver().findElement(By.id("eow-title")).getText().contains(videoNameStr));
+        assertTrue(getDriver().findElement(By.id("eow-title")).getText().contains(Property.VIDEO_NAME));
     }
 }

@@ -1,5 +1,6 @@
 package page;
 
+import data.Property;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -34,10 +35,9 @@ public class PgUpload extends PageBase {
 
     public void setUniqueVideoName() {
         log("Set unique name for file");
-        String videoNameStr = "quvayumac";
         WebElement videoName = getDriver().findElement(By.className("video-settings-title"));
         videoName.clear();
-        videoName.sendKeys(videoNameStr);
+        videoName.sendKeys(Property.VIDEO_NAME);
     }
 
     public void publishVideo() {
@@ -58,13 +58,12 @@ public class PgUpload extends PageBase {
             Thread.sleep(sleepMs);
             WebElement searchField = getDriver().findElement(By.className("search-term"));
             searchField.clear();
-            String videoNameStr = "quvayumac";
-            searchField.sendKeys(videoNameStr);
+            searchField.sendKeys(Property.VIDEO_NAME);
             WebElement searchBtn = getDriver().findElement(By.className("search-button"));
             searchBtn.click();
             List<WebElement> result = getDriver().findElements(By.className("yt-uix-tile-link"));
             if ( result.size() > 0) {
-                if (result.get(0).getText().equals(videoNameStr)) {
+                if (result.get(0).getText().equals(Property.VIDEO_NAME)) {
                     break;
                 }
             }
