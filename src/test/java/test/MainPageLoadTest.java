@@ -16,6 +16,7 @@ public class MainPageLoadTest extends PageBase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        setLogTag(MainPageLoadTest.class);
     }
 
     @After
@@ -26,7 +27,7 @@ public class MainPageLoadTest extends PageBase {
 
     @Test
     public void mainPageLoadTest() throws Exception {
-        log.info("Open page");
+        log("Open page");
         getDriver().get(baseUrl);
         assertTrue(getDriver().getCurrentUrl().contains(baseUrl));
     }
